@@ -38,9 +38,9 @@ namespace GameRandomStarter
                         TagUpdate();
                         foreach (JProperty gameName in ((JObject)gameListData["Games"]).Properties())
                         {
-                            DataGrid.Rows.Add(gameName.Name, gameName.Value["Path"], gameName.Value["Tag"]);
+                            DataGrid.Rows.Add(gameName.Name, gameName.Value["Path"], gameName.Value["Tag"].ToString());
                             DataGridViewComboBoxCell comboCell = DataGrid.Rows[DataGrid.Rows.Count - 1].Cells[2] as DataGridViewComboBoxCell;
-                            DataGrid.Rows.Set = comboCell.Items[comboCell.Items.IndexOf(gameName.Value["Tag"])].Value;
+                            // comboCell.Value = comboCell.Items[comboCell.Items.IndexOf(gameName.Value["Tag"])].ToString();
                         }
                     }
                 }
@@ -150,7 +150,7 @@ namespace GameRandomStarter
 
         private void DataGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            Delete.Enabled = true;
+            
         }
         private void DataGrid_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
@@ -206,9 +206,9 @@ namespace GameRandomStarter
             }
             if (gameListData.ContainsKey("AllTags"))
             {
-                for (int i = 0; i < ((JArray)gameListData["AllTags"]).Count(); i++)
+                foreach (var obj in (JObject)gameListData["AllTags"])
                 {
-                    string tag = ((JArray)gameListData["AllTags"])[i].ToString();
+                    string tag = obj.Key.ToString();
                     if (!combo.Items.Contains(tag))
                     {
                         combo.Items.Add(tag);
@@ -225,7 +225,8 @@ namespace GameRandomStarter
 
         private void DataGrid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if(e.ColumnIndex == 2)
+            Delete.Enabled = true;
+            if (e.ColumnIndex == 2)
             {
                 DataGrid.BeginEdit(true);
                 ((ComboBox)DataGrid.EditingControl).DroppedDown = true;

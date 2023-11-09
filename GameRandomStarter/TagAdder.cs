@@ -47,15 +47,15 @@ namespace GameRandomStarter
 
         private void Add_Click(object sender, EventArgs e)
         {
-            JArray emptyArray = new JArray();
-            if (!gameListData.ContainsKey("AllTags")) gameListData.Add("AllTags", emptyArray);
+            JObject emptyObject = new JObject();
+            if (!gameListData.ContainsKey("AllTags")) gameListData.Add("AllTags", emptyObject);
             string tag = textBox1.Text;
-            if (((JArray)gameListData["AllTags"]).Any(j => j.ToString() == tag))
+            if (((JObject)gameListData["AllTags"]).ContainsKey(tag))
             {
                 MessageBox.Show("이미 등록된 태그입니다.", "에러", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            ((JArray)gameListData["AllTags"]).Add(tag);
+            ((JObject)gameListData["AllTags"]).Add(tag, true);
             TagList.Items.Add(tag);
             textBox1.Text = "";
 
@@ -65,7 +65,7 @@ namespace GameRandomStarter
         {
             string tag = TagList.SelectedItem.ToString();
             TagList.Items.Remove(TagList.SelectedItem);
-            ((JArray)gameListData["AllTags"]).Remove(((JArray)gameListData["AllTags"]).FirstOrDefault(j => j.ToString() == tag));
+            ((JObject)gameListData["AllTags"]).Remove(tag);
             foreach (JProperty game in ((JObject)gameListData["Games"]).Properties())
             {
                 if (gameListData["Games"][game.Name]["Tag"].ToString() == tag)
