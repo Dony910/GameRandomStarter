@@ -42,6 +42,7 @@ namespace GameRandomStarter
                         foreach (JProperty gameTag in ((JObject)gameListData["AllTags"]).Properties())
                         {
                             TagList.Items.Add(gameTag.Name);
+                            TagList.SetItemChecked(TagList.Items.Count - 1, gameTag.Value.ToObject<bool>());
                         }
                     }
                 }
@@ -107,6 +108,20 @@ namespace GameRandomStarter
         {
             if (TagList.SelectedItems.Contains("None")) Delete.Enabled = false;
             else Delete.Enabled = true;
+        }
+
+        private void TagList_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            if(TagList.SelectedItem == null) return;
+            Debug.WriteLine($"{TagList.SelectedItem} {e.NewValue == CheckState.Checked} changed");
+            if(e.NewValue == CheckState.Checked)
+            {
+                gameListData["AllTags"][TagList.SelectedItem.ToString()] = true;
+                Debug.WriteLine($"{TagList.SelectedItem} {gameListData["AllTags"][TagList.SelectedItem.ToString()]} changed");
+            }
+            else gameListData["AllTags"][TagList.SelectedItem.ToString()] = false;
+
+            SaveJson();
         }
     }
 }
