@@ -34,10 +34,14 @@ namespace GameRandomStarter
                     {
                         gameListData = (JObject)JToken.ReadFrom(reader);
                         JObject emptyObject = new JObject();
-                        if (!gameListData.ContainsKey("AllTags")) gameListData.Add("AllTags", emptyObject);
-                        foreach (string gameTag in gameListData["AllTags"])
+                        if (!gameListData.ContainsKey("AllTags"))
                         {
-                            TagList.Items.Add(gameTag);
+                            gameListData.Add("AllTags", emptyObject);
+                            ((JObject)gameListData["AllTags"]).Add("None", true);
+                        }
+                        foreach (JProperty gameTag in ((JObject)gameListData["AllTags"]).Properties())
+                        {
+                            TagList.Items.Add(gameTag.Name);
                         }
                     }
                 }
@@ -69,7 +73,7 @@ namespace GameRandomStarter
             foreach (JProperty game in ((JObject)gameListData["Games"]).Properties())
             {
                 if (gameListData["Games"][game.Name]["Tag"].ToString() == tag)
-                    game.Value["Tag"] = "";
+                    game.Value["Tag"] = "None";
             }
 
             SaveJson();
@@ -101,7 +105,8 @@ namespace GameRandomStarter
 
         private void TagList_SelectedValueChanged(object sender, EventArgs e)
         {
-            Delete.Enabled = true;
+            if (TagList.SelectedItems.Contains("None")) Delete.Enabled = false;
+            else Delete.Enabled = true;
         }
     }
 }

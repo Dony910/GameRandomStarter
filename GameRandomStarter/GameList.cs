@@ -38,15 +38,13 @@ namespace GameRandomStarter
                         TagUpdate();
                         foreach (JProperty gameName in ((JObject)gameListData["Games"]).Properties())
                         {
+                            DataGridViewComboBoxColumn comboCol = DataGrid.Columns[2] as DataGridViewComboBoxColumn;
                             DataGrid.Rows.Add(gameName.Name, gameName.Value["Path"], gameName.Value["Tag"].ToString());
-                            DataGridViewComboBoxCell comboCell = DataGrid.Rows[DataGrid.Rows.Count - 1].Cells[2] as DataGridViewComboBoxCell;
-                            // comboCell.Value = comboCell.Items[comboCell.Items.IndexOf(gameName.Value["Tag"])].ToString();
                         }
                     }
                 }
             }
             catch (System.IO.FileNotFoundException) { }
-            TagUpdate();
         }
 
         private void Done_Click(object sender, EventArgs e)
@@ -155,6 +153,8 @@ namespace GameRandomStarter
         private void DataGrid_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
             ComboBox combo = e.Control as ComboBox;
+            Debug.WriteLine(DataGrid.SelectedRows[0].Cells[2].Value);
+            combo.SelectedIndex = combo.Items.IndexOf(DataGrid.SelectedRows[0].Cells[2].Value.ToString());
             if (combo != null)
             {
                 combo.SelectedIndexChanged -= new EventHandler(ComboBox_SelectedIndexChanged);
@@ -203,6 +203,10 @@ namespace GameRandomStarter
             foreach(string tag in invalidTags)
             {
                 combo.Items.Remove(tag);
+            }
+            foreach (DataGridViewRow row in DataGrid.Rows)
+            {
+                row.Cells[2].Value = row.Cells[2].Value.ToString();
             }
             if (gameListData.ContainsKey("AllTags"))
             {
