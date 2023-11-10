@@ -33,8 +33,8 @@ namespace GameRandomStarter
                     using (JsonTextReader reader = new JsonTextReader(file))
                     {
                         gameListData = (JObject)JToken.ReadFrom(reader);
-                        JArray emptyArray = new JArray();
-                        if (!gameListData.ContainsKey("AllTags")) gameListData.Add("AllTags", emptyArray);
+                        JObject emptyObject = new JObject();
+                        if (!gameListData.ContainsKey("AllTags")) gameListData.Add("AllTags", emptyObject);
                         foreach (string gameTag in gameListData["AllTags"])
                         {
                             TagList.Items.Add(gameTag);
@@ -91,6 +91,17 @@ namespace GameRandomStarter
         private void Done_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            if (textBox1.Text.Length > 0) Add.Enabled = true;
+            else Add.Enabled = false;
+        }
+
+        private void TagList_SelectedValueChanged(object sender, EventArgs e)
+        {
+            Delete.Enabled = true;
         }
     }
 }
