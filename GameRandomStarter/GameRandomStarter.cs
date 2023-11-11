@@ -35,16 +35,24 @@ namespace GameRandomStarter
         {
             LoadJson();
             Random random = new Random();
-            int randomIndex = random.Next(((JArray)gameListData["GameNames"]).Count);
+            int randomIndex;
+            JToken tag;
+            do {
+                randomIndex = random.Next(((JObject)gameListData["Games"]).Count);
+                tag = ((JObject)gameListData["AllTags"])[gameListData["Games"][((JObject)gameListData["Games"]).Properties().ToList()[randomIndex].Name.ToString()]["Tag"].ToString()];
+            }
+            while (!Convert.ToBoolean(tag));
 
             Debug.WriteLine(randomIndex);
-            Process.Start(gameListData["GamePaths"][gameListData["GameNames"][randomIndex].ToString()].ToString());
+            Process.Start(gameListData["Games"][((JObject)gameListData["Games"]).Properties().ToList()[randomIndex].Name.ToString()]["Path"].ToString());
         }
 
         private void Modify_Click(object sender, EventArgs e)
         {
             GameList gameList = new GameList();
             gameList.ShowDialog();
+
+            LoadJson();
         }
         private void LoadJson()
         {
@@ -59,6 +67,14 @@ namespace GameRandomStarter
                 }
             }
             catch (System.IO.FileNotFoundException) { }
+        }
+
+        private void Tag_Click(object sender, EventArgs e)
+        {
+            TagAdder tagAdder = new TagAdder();
+            tagAdder.ShowDialog();
+
+            LoadJson();
         }
     }
 }

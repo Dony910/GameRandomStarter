@@ -138,6 +138,7 @@ namespace GameRandomStarter
             }
             SaveJson();
             Delete.Enabled = false;
+            DataGrid.ClearSelection();
         }
 
 

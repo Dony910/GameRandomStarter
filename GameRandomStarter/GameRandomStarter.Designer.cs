@@ -30,6 +30,7 @@
         {
             this.Start = new System.Windows.Forms.Button();
             this.Modify = new System.Windows.Forms.Button();
+            this.Tag = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // Start
@@ -48,17 +49,29 @@
             this.Modify.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.Modify.Location = new System.Drawing.Point(341, 12);
             this.Modify.Name = "Modify";
-            this.Modify.Size = new System.Drawing.Size(93, 125);
+            this.Modify.Size = new System.Drawing.Size(93, 87);
             this.Modify.TabIndex = 1;
             this.Modify.Text = "Modify";
             this.Modify.UseVisualStyleBackColor = true;
             this.Modify.Click += new System.EventHandler(this.Modify_Click);
+            // 
+            // Tag
+            // 
+            this.Tag.Font = new System.Drawing.Font("맑은 고딕", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.Tag.Location = new System.Drawing.Point(341, 105);
+            this.Tag.Name = "Tag";
+            this.Tag.Size = new System.Drawing.Size(93, 32);
+            this.Tag.TabIndex = 2;
+            this.Tag.Text = "Tag";
+            this.Tag.UseVisualStyleBackColor = true;
+            this.Tag.Click += new System.EventHandler(this.Tag_Click);
             // 
             // GameRandomStarter
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(446, 149);
+            this.Controls.Add(this.Tag);
             this.Controls.Add(this.Modify);
             this.Controls.Add(this.Start);
             this.MaximizeBox = false;
@@ -75,6 +88,7 @@
 
         private System.Windows.Forms.Button Start;
         private System.Windows.Forms.Button Modify;
+        private System.Windows.Forms.Button Tag;
     }
 }
 

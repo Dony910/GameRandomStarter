@@ -62,6 +62,7 @@ namespace GameRandomStarter
             }
             ((JObject)gameListData["AllTags"]).Add(tag, true);
             TagList.Items.Add(tag);
+            TagList.SetItemCheckState(TagList.Items.Count - 1, CheckState.Checked);
             textBox1.Text = "";
 
             SaveJson();
@@ -76,7 +77,7 @@ namespace GameRandomStarter
                 if (gameListData["Games"][game.Name]["Tag"].ToString() == tag)
                     game.Value["Tag"] = "None";
             }
-
+            TagList.ClearSelected();
             SaveJson();
         }
         private void SaveJson()
@@ -114,14 +115,33 @@ namespace GameRandomStarter
         {
             if(TagList.SelectedItem == null) return;
             Debug.WriteLine($"{TagList.SelectedItem} {e.NewValue == CheckState.Checked} changed");
-            if(e.NewValue == CheckState.Checked)
+            if (e.NewValue == CheckState.Checked)
             {
                 gameListData["AllTags"][TagList.SelectedItem.ToString()] = true;
                 Debug.WriteLine($"{TagList.SelectedItem} {gameListData["AllTags"][TagList.SelectedItem.ToString()]} changed");
             }
-            else gameListData["AllTags"][TagList.SelectedItem.ToString()] = false;
-
+            else
+            {
+                gameListData["AllTags"][TagList.SelectedItem.ToString()] = false;
+                if (!ValidateTagList())
+                {
+                    MessageBox.Show("체크된 태그가 한개 이상이어야 합니다.", "에러", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    
+                    gameListData["AllTags"][TagList.SelectedItem.ToString()] = true;
+                    e.NewValue = CheckState.Checked;
+                    return;
+                }
+            }
             SaveJson();
+        }
+        private bool ValidateTagList()
+        {
+            bool value = false;
+            foreach(JProperty tag in ((JObject)gameListData["AllTags"]).Properties())
+            {
+                value = value || (bool)tag.Value;
+            }
+            return value;
         }
     }
 }
