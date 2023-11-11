@@ -45,6 +45,7 @@ namespace GameRandomStarter
                 }
             }
             catch (System.IO.FileNotFoundException) { }
+            DataGrid.CurrentCell = null;
         }
 
         private void Done_Click(object sender, EventArgs e)

@@ -35,10 +35,10 @@
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.Delete = new System.Windows.Forms.Button();
             this.DataGrid = new System.Windows.Forms.DataGridView();
-            this.Tag = new System.Windows.Forms.Button();
             this.GameName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.GamePath = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.GameTag = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Tag = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DataGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -122,18 +122,6 @@
             this.DataGrid.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.DataGrid_DataError);
             this.DataGrid.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.DataGrid_EditingControlShowing);
             // 
-            // Tag
-            // 
-            this.Tag.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Tag.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.Tag.Location = new System.Drawing.Point(483, 88);
-            this.Tag.Name = "Tag";
-            this.Tag.Size = new System.Drawing.Size(98, 32);
-            this.Tag.TabIndex = 5;
-            this.Tag.Text = "Tag";
-            this.Tag.UseVisualStyleBackColor = true;
-            this.Tag.Click += new System.EventHandler(this.Tag_Click);
-            // 
             // GameName
             // 
             this.GameName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
@@ -159,6 +147,18 @@
             this.GameTag.Name = "GameTag";
             this.GameTag.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.GameTag.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // Tag
+            // 
+            this.Tag.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.Tag.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.Tag.Location = new System.Drawing.Point(483, 88);
+            this.Tag.Name = "Tag";
+            this.Tag.Size = new System.Drawing.Size(98, 32);
+            this.Tag.TabIndex = 5;
+            this.Tag.Text = "Tag";
+            this.Tag.UseVisualStyleBackColor = true;
+            this.Tag.Click += new System.EventHandler(this.Tag_Click);
             // 
             // GameList
             // 
